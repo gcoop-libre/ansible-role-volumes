@@ -1,0 +1,6 @@
+---
+- include: tasks/volume.yml
+  vars:
+    volume: "{{ item }}"
+  with_items: "{{ volumes }}"
+  when: volumes | length > 0

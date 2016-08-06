@@ -1,0 +1,18 @@
+---
+volumes_defaults:
+  fstype: ext4
+  opts: noatime,errors=remount-ro
+  dump: 0
+  passno: 2
+  state: mounted
+  fstab: /etc/fstab
+volumes: []
+  # Available properties
+  # - dev: /dev/sda1
+  #   mount_point: /data
+  #   fstype: ext4 (default)
+  #   opts: noatime,errors=remount-ro (default)
+  #   dump: 0 (default)
+  #   passno: 2 (default)
+  #   state: mounted (default)
+  #   fstab: /etc/fstab (default)

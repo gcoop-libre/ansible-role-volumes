@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  remote_user: root
+  roles:
+    - role: gcoop-libre.volumes
+      volumes:
+        - dev: /dev/sda1
+          mount_point: /data

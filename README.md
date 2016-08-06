@@ -1,38 +1,61 @@
-Role Name
-=========
+Volumes
+=======
 
-A brief description of the role goes here.
+An Ansible Role that mounts volumes and devices into GNU/Linux systems.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+None.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Available variables are listed below, along with default values (see `defaults/main.yml`):
+
+    volumes_defaults:
+      fstype: ext4
+      opts: noatime,errors=remount-ro
+      dump: 0
+      passno: 2
+      state: mounted
+      fstab: /etc/fstab
+
+This properties set the default values for the volumes of the list that does not override them explicitly.
+
+    volumes:
+      - dev: /dev/sda1
+        mount_point: /data
+        fstype: ext4
+        opts: noatime,errors=remount-ro
+        dump: 0
+        passno: 2
+        state: mounted
+        fstab:/etc/fstab
+
+List of volumes or devices that should be mounted. Each element must define at least `dev` and `mount_point` properties. The other properties would be set to the default value if they are not defined. They correspond to the options of the [`mount` module](https://docs.ansible.com/ansible/mount_module.html)
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+None.
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
+    - hosts: vps
       roles:
-         - { role: username.rolename, x: 42 }
+        - role: gcoop-libre.volumes
+          volumes:
+            - dev: /dev/vda
+              mount_point: /data
 
 License
 -------
 
-BSD
+GPLv2
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+This role was created in 2016 by [gcoop Cooperativa de Software Libre](http://gcoop.coop).

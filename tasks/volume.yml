@@ -1,0 +1,33 @@
+---
+- name: "Volume {{ volume.dev }}: Verify the existence"
+  stat:
+    path: "{{ volume.dev }}"
+  register: volume_exists
+
+- name: "Volume {{ volume.dev }}: Create the mount point {{ volume.mount_point }}"
+  file:
+    dest: "{{ volume.mount_point }}"
+    owner: root
+    group: root
+    mode: '0755'
+    state: directory
+  when: volume_exists.stat.exists | default(false)
+
+- name: "Volume {{ volume.dev }}: Format"
+  filesystem:
+    dev: "{{ volume.dev }}"
+    fstype: "{{ volume.fstype | default(volumes_defaults.fstype) }}"
+    force: no
+  when: volume_exists.stat.exists | default(false)
+
+- name: "Volume {{ volume.dev }}: Mount in {{ volume.mount_point }}"
+  mount:
+    name: "{{ volume.mount_point }}"
+    src: "{{ volume.dev }}"
+    fstype: "{{ volume.fstype | default(volumes_defaults.fstype) }}"
+    opts: "{{ volume.opts | default(volumes_defaults.opts) }}"
+    dump: "{{ volume.dump | default(volumes_defaults.dump) }}"
+    passno: "{{ volume.passno | default(volumes_defaults.passno) }}"
+    state: "{{ volume.state | default(volumes_defaults.state) }}"
+    fstab: "{{ volume.fstab | default(volumes_defaults.fstab) }}"
+  when: volume_exists.stat.exists | default(false)
