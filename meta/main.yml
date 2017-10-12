@@ -5,7 +5,7 @@ galaxy_info:
   description: Mount volumes and devices
   company: gcoop Cooperativa de Software Libre
   license: GPLv2
-  min_ansible_version: 1.9
+  min_ansible_version: 2.4
   platforms:
     - name: EL
       versions:
