@@ -1,6 +1,7 @@
 ---
 - include: tasks/volume.yml
-  vars:
-    volume: "{{ item }}"
   with_items: "{{ volumes }}"
+  loop_control:
+    loop_var: volume
+    label: "{{ volume.dev }}"
   when: volumes | length > 0
